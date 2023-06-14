@@ -1,15 +1,15 @@
 import React from 'react';
 import './Details.css';
-import { useParams } from 'react-router-dom'; // Import useParams to get the ID from the URL
-import { getBatteryDataById } from '../../batteryDataService'; // Import the data list
+import { useParams } from 'react-router-dom';
+import { getBatteryDataById } from '../../batteryDataService';
 
 const Details = () => {
-  const { id } = useParams(); // Get the ID from the URL
+  const { id } = useParams(); // Get id from the url
 
-  // Find the data item with the matching ID
+  // Find data item with the matching id
   const data = getBatteryDataById(id);
 
-  // Render the details of the selected item
+  // Show details of the selected item
   return (
     <div className="container">
       <div className="card">
@@ -25,15 +25,10 @@ const Details = () => {
           <p className="card-text">MinVoltageDischarge: {data.MinVoltageDischarge}</p>
           <p className="card-text">ChargeTime: {data.ChargeTime}</p>
           <p className="card-text">RemainingUsefulLife: {data.RemainingUsefulLife}</p>
-          {/* Add more details here */}
         </div>
       </div>
     </div>
   );
 };
-
-Details.propTypes = {};
-
-Details.defaultProps = {};
 
 export default Details;

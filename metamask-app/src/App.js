@@ -1,11 +1,12 @@
 import React from 'react';
 import { Outlet } from "react-router-dom";
+import logo from './assets/logo.jpg';
 
 const App = () => {
   return (
     <>
       <div id="sidebar">
-        <img key="assets/logo.jpg" src="assets/logo.jpg" />
+      <img src={logo} className="App-logo" alt="logo" />
         <h1>Battery app</h1>
         <nav>
           <ul>
@@ -16,7 +17,10 @@ const App = () => {
               <a href={`/batteries`}>Batteries</a>
             </li>
             <li>
-              <a href={`/create`}>Create Battery</a>
+              <a href={`/create`}>Create Certificate</a>
+            </li>
+            <li>
+              <a href={`/update`}>Update Certificate</a>
             </li>
           </ul>
         </nav>

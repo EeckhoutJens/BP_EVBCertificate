@@ -1,7 +1,7 @@
 import React from 'react';
 import './Batteries.css';
-import { Link } from 'react-router-dom'; // Import Link and useHistory
-import { getBatteryDataList } from '../../batteryDataService'; // Import the data list
+import { Link } from 'react-router-dom';
+import { getBatteryDataList } from '../../batteryDataService';
 
 const Batteries = () => {
   const dataList = getBatteryDataList();
@@ -10,7 +10,6 @@ const Batteries = () => {
   return (
     <div className="container">
       <div className="row">
-        {/* Data cards */}
         {dataList.map((data) => (
           <div className="col-md-4" key={data.Id}>
             <div className="card mb-4">
