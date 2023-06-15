@@ -1,7 +1,6 @@
 let BatteryDataList = [
     {
         Id: "1",
-        Address: "0x7a1b2d3c4f5e6",
         CycleIndex: 2,
         DischargeTime: 1,
         TimeAt4_15V: 3,
@@ -14,7 +13,6 @@ let BatteryDataList = [
     },
     {
         Id: "2",
-        Address: "0x7a1b2d3c4f5e6",
         CycleIndex: 2,
         DischargeTime: 1,
         TimeAt4_15V: 3,
@@ -27,7 +25,6 @@ let BatteryDataList = [
     },
     {
         Id: "3",
-        Address: "0x7a1b2d3c4f5e6",
         CycleIndex: 2,
         DischargeTime: 1,
         TimeAt4_15V: 3,
@@ -50,7 +47,6 @@ export const getBatteryDataById = (id) => {
 
 export const addOrUpdateData = (
     id,
-    address,
     cycleIndex,
     dischargeTime,
     timeAt4_15V,
@@ -65,7 +61,6 @@ export const addOrUpdateData = (
 
     if (index !== -1) {
         // If the data item exists, update its Cycle property
-        BatteryDataList[index].Address = address;
         BatteryDataList[index].CycleIndex = cycleIndex;
         BatteryDataList[index].DischargeTime = dischargeTime;
         BatteryDataList[index].TimeAt4_15V = timeAt4_15V;
@@ -79,7 +74,6 @@ export const addOrUpdateData = (
         // If the data item doesn't exist, add it to the dataList
         BatteryDataList.push({
             Id: id,
-            Address: address,
             CycleIndex: cycleIndex,
             DischargeTime: dischargeTime,
             TimeAt4_15V: timeAt4_15V,

@@ -18,6 +18,9 @@ const App = () => {
             <li>
               <a href={`/create`}>Create Battery</a>
             </li>
+            <li>
+              <a href={`/load`}>Load BatteryData</a>
+            </li>
           </ul>
         </nav>
       </div>
