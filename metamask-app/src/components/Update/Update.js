@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
+import './Update.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Web3 from 'web3';
-import './Create.css';
 import contractABI from '../../assets/abi.json';
 
-const Create = () => {
+const Update = () => {
   const [accounts, setAccounts] = useState([]);
   const [contract, setContract] = useState(null);
   const [formData, setFormData] = useState({
+    id: '',
     address: '',
     cycleIndex: '',
     dischargeTime: '',
@@ -55,6 +56,7 @@ const Create = () => {
     event.preventDefault();
     try {
       const {
+        id,
         cycleIndex,
         dischargeTime,
         timeAt415V,
@@ -66,11 +68,10 @@ const Create = () => {
         remainingUsefulLife,
       } = formData;
 
-      let uri = "ipfs://QmZBvKyfkmWWNvz79NoDjG9nHXpxjXdyjHmYYuvEp2HCrn";
+      let uri = "ipfs://QmSuXKPUYnF4dhb2YQvE5RpkoijG6zfsbSGTfV9EQKxkoq";
 
-      let tokenId = await contract.methods.create(uri).send({ from: accounts[0] });
+      await contract.methods.update(id, uri).send({ from: accounts[0] });
 
-      console.log(tokenId);
       console.log('Data added successfully!');
     } catch (error) {
       console.error(error);
@@ -81,6 +82,10 @@ const Create = () => {
     <div className="container">
       <div className="card mt-4 p-4">
         <form onSubmit={handleSubmit}>
+          <div className="mb-3">
+            <label htmlFor="id" className="form-label">Id:</label>
+            <input type="text" className="form-control" id="id" name="id" value={formData.id} onChange={handleChange} />
+          </div>
           <div className="mb-3">
             <label htmlFor="cycleIndex" className="form-label">Cycle Index:</label>
             <input type="number" className="form-control" id="cycleIndex" name="cycleIndex" value={formData.cycleIndex} onChange={handleChange} />
@@ -117,11 +122,11 @@ const Create = () => {
             <label htmlFor="remainingUsefulLife" className="form-label">Remaining Useful Life:</label>
             <input type="number" className="form-control" id="remainingUsefulLife" name="remainingUsefulLife" value={formData.remainingUsefulLife} onChange={handleChange} />
           </div>
-          <button type="submit" className="btn btn-primary">Add Certificate</button>
+          <button type="submit" className="btn btn-primary">Update Certificate</button>
         </form>
       </div>
     </div>
   );
 };
 
-export default Create;
+export default Update;

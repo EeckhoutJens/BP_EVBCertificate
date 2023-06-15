@@ -1,36 +1,65 @@
-import React, { useState } from "react";
+import React, {useEffect, useState } from "react";
 import Papa from "papaparse";
 import axios from 'axios';
-import { addOrUpdateData, getBatteryDataList } from '../../batteryDataService';
-import { handleFileSubmission,handleJSONSubmission } from "../../ipfsPinningService";
+import { addOrUpdateData, getBatteryDataList,getBatteryDataById } from '../../batteryDataService';
+import { handleFileSubmission,handleJSONSubmission,getMetadataHash } from "../../ipfsPinningService";
+import { AddDataToMap,GetTokenId,HasToken } from "../../TokenStorage";
+import contractABI from '../../assets/abi.json';
+import Web3 from 'web3';
 // Allowed extensions for input file
 const allowedExtensions = ["csv"];
 
 const Load = () => {
- 
     // This state will store the parsed data
     const [data, setData] = useState([]);
- 
     // It state will contain the error when
     // correct file extension is not used
     const [error, setError] = useState("");
- 
     // It will store the file uploaded by the user
     const [file, setFile] = useState("");
+    const [accounts, setAccounts] = useState([]);
+    const [contract, setContract] = useState(null);
  
+    useEffect(() => {
+        loadMetaMaskData();
+      }, []);
+
+    const loadMetaMaskData = async () => {
+        if (window.ethereum) {
+          try {
+            // Request account access
+            await window.ethereum.request({ method: 'eth_requestAccounts' });
+    
+            // Get the list of accounts
+            const accounts = await window.ethereum.request({ method: 'eth_accounts' });
+            setAccounts(accounts);
+    
+            // Connect to the contract
+            const web3 = new Web3(window.ethereum);
+            const contractAddress = '0xab149423bd1052efe1f696cee47289f8db34e40c';
+            const contract = new web3.eth.Contract(contractABI, contractAddress);
+            setContract(contract);
+          } catch (error) {
+            console.error(error);
+          }
+        } else {
+          console.log('MetaMask extension not detected!');
+        }
+      };
+
     // This function will be called when
     // the file input changes
     const handleFileChange = (e) => {
         setError("");
- 
         // Check if user has entered the file
         if (e.target.files.length) {
             const inputFile = e.target.files[0];
+            console.log(inputFile);
  
             // Check the file extensions, if it not
             // included in the allowed extensions
             // we show the error
-            const fileExtension = inputFile?.type.split("/")[1];
+            const fileExtension = inputFile?.name.split(".")[1];
             if (!allowedExtensions.includes(fileExtension)) {
                 setError("Please input a csv file");
                 return;
@@ -64,6 +93,12 @@ const Load = () => {
             console.log(getBatteryDataList())
             setData(columns);
             await handleJSONSubmission(parsedData[parsedData.length - 1].RUL,parsedData[0].Battery_ID)
+            if(HasToken(parsedData[0].Battery_ID)) {
+                await contract.methods.update(GetTokenId(parsedData[0].Battery_ID), getMetadataHash()).send({ from: accounts[0] });
+            } else {
+                let receivedToken = await contract.methods.create(getMetadataHash()).send({ from: accounts[0] });
+                AddDataToMap(parsedData[0].Battery_ID, receivedToken);
+            }
             await handleFileSubmission(file)
         };
         reader.readAsText(file);

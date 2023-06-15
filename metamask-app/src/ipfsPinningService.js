@@ -3,7 +3,7 @@ import axios from 'axios';
 const GradeImageHashes = ['QmWx4R1jtp7gYbHdMkTLYVdSjwNCyWawsfKK5Hb7asXz8P','Qmcr3EcFKyGwYYcS1Use4CvF1n1hUcTMqpc2p7MaDmV44t',
 'QmNQw9ieGVttUXWTRQFEmsuFqmLuaAoq51jmp7zBvvju6J','QmNUxNHE63R5pskkcmRbfnotg6qLiUQPHVkacyaC9odRUK','QmPNzRaPevZiwPHsJeiJzjheX5ETAJCvzsf2ynvCzoFcpB']
 
-let metadataHash;
+let metadataHash = "0000000000";
 
 export const handleJSONSubmission = async(RUL, BatteryID) => {
     //Move to seperate function so this can be used for manually added data as well
@@ -33,9 +33,11 @@ export const handleJSONSubmission = async(RUL, BatteryID) => {
     const metadata = {
         name: "BatteryCertificate #" + BatteryID.toString(),
         description: "Unique EVB certificate",
-        grade: calculatedScore,
         image: imageHash,
-        materials: "Li-ion,NMC,Ni-MH,Li-S,Lead-Acid"
+        properties: {
+          materials: "Li-ion,NMC,Ni-MH,Li-S,Lead-Acid",
+          grade: calculatedScore
+        }
     }
     const jsonMetadata = JSON.stringify(metadata);
 
