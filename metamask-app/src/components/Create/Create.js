@@ -82,8 +82,7 @@ const Create = () => {
       }
 
       let tokenId = await contract.methods.create(uri).send({ from: accounts[0] });
-
-      console.log(tokenId);
+      console.log(parseInt(tokenId.logs[0].topics[3]));
       console.log('Data added successfully!');
     } catch (error) {
       console.error(error);
@@ -130,7 +129,7 @@ const Create = () => {
             <label htmlFor="remainingUsefulLife" className="form-label">Remaining Useful Life:</label>
             <input type="number" className="form-control" id="remainingUsefulLife" name="remainingUsefulLife" value={formData.remainingUsefulLife} onChange={handleChange} />
           </div>
-          <button type="submit" className="btn btn-primary">Add Certificate</button>
+          <button type="submit" className="btn btn-primary">Create Certificate</button>
         </form>
       </div>
     </div>

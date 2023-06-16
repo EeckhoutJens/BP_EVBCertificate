@@ -26,7 +26,6 @@ const Home = () => {
           params: [accounts[0], 'latest'],
         });
         setBalance(balance);
-
       } catch (error) {
         console.error(error);
       }

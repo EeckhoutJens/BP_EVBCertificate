@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { getBatteryDataList } from '../../batteryDataService';
 
 const Batteries = () => {
-  const savedData = localStorage.getItem('savedData');
+  const savedData = JSON.parse(localStorage.getItem('savedData'));
   const dataList = getBatteryDataList(savedData);
  
   // Retrieve the data list

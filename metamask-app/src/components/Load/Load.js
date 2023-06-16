@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from 'axios';
 import Papa from "papaparse";
 import { handleFileSubmission, handleJSONSubmission, getMetadataHash } from "../../ipfsPinningService";
-import { AddDataToMap, GetTokenId, HasToken } from "../../TokenStorage";
 import contractABI from '../../assets/abi.json';
+import { HasToken,GetTokenId,AddDataToMap } from "../../TokenStorage";
 import Web3 from 'web3';
 
 // Allowed extensions for input file
@@ -79,15 +79,18 @@ const Load = () => {
             const csv = Papa.parse(target.result, { header: true });
             const parsedData = csv?.data;
             const columns = Object.keys(parsedData[0]);
-
-            localStorage.setItem('savedData', parsedData);
-
+            localStorage.setItem('savedData', JSON.stringify(parsedData));
             setData(columns);
             await handleJSONSubmission(parsedData[parsedData.length - 1].RUL, parsedData[0].Battery_ID)
-            if (HasToken(parsedData[0].Battery_ID)) {
-                await contract.methods.update(GetTokenId(parsedData[0].Battery_ID), getMetadataHash()).send({ from: accounts[0] });
+            const retrievedID = localStorage.getItem(String(parsedData[0].Battery_ID))
+            if (retrievedID != null) {
+                await contract.methods.update(retrievedID, getMetadataHash()).send({ from: accounts[0] });
             } else {
-                let receivedToken = await contract.methods.create(getMetadataHash()).send({ from: accounts[0] });
+                let uri = "ipfs://";
+                uri = uri.concat(getMetadataHash())
+                 let receivedToken = await contract.methods.create(uri).send({ from: accounts[0] });
+                 receivedToken = parseInt(receivedToken.logs[0].topics[3])
+                localStorage.setItem(String(parsedData[0].Battery_ID), receivedToken);
                 AddDataToMap(parsedData[0].Battery_ID, receivedToken);
             }
             await handleFileSubmission(file)
