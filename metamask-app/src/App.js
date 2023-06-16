@@ -23,7 +23,7 @@ const App = () => {
               <a href={`/update`}>Update Certificate</a>
             </li>
             <li>
-              <a href={`/load`}>Load BatteryData</a>
+              <a href={`/load`}>Load Battery Data</a>
             </li>
           </ul>
         </nav>

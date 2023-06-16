@@ -15,7 +15,6 @@ const Batteries = () => {
             <div className="card mb-4">
               <div className="card-body">
                 <h5 className="card-title">Data ID: {data.Id}</h5>
-                <p className="card-text">Address: {data.Address}</p>
                 <p className="card-text">CycleIndex: {data.CycleIndex}</p>
                 <Link to={`/details/${data.Id}`} className="btn btn-primary">View Details</Link>
               </div>
