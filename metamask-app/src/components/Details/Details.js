@@ -14,17 +14,17 @@ const Details = () => {
     <div className="container">
       <div className="card">
         <div className="card-body">
-          <h5 className="card-title">Data ID: {data.Id}</h5>
-          <p className="card-text">Address: {data.Address}</p>
-          <p className="card-text">CycleIndex: {data.CycleIndex}</p>
-          <p className="card-text">DischargeTime: {data.DischargeTime}</p>
-          <p className="card-text">TimeAt4_15V: {data.TimeAt4_15V}</p>
-          <p className="card-text">TimeConstantCurrent: {data.TimeConstantCurrent}</p>
-          <p className="card-text">DecrementTime: {data.DecrementTime}</p>
-          <p className="card-text">MaxVoltageDischarge: {data.MaxVoltageDischarge}</p>
-          <p className="card-text">MinVoltageDischarge: {data.MinVoltageDischarge}</p>
-          <p className="card-text">ChargeTime: {data.ChargeTime}</p>
-          <p className="card-text">RemainingUsefulLife: {data.RemainingUsefulLife}</p>
+          <h5 className="card-title">Data ID: {data.id}</h5>
+          <p className="card-text">Address: {data.address}</p>
+          <p className="card-text">CycleIndex: {data.cycleIndex}</p>
+          <p className="card-text">DischargeTime: {data.dischargeTime}</p>
+          <p className="card-text">TimeAt4_15V: {data.timeAt4_15V}</p>
+          <p className="card-text">TimeConstantCurrent: {data.timeConstantCurrent}</p>
+          <p className="card-text">DecrementTime: {data.decrementTime}</p>
+          <p className="card-text">MaxVoltageDischarge: {data.maxVoltageDischarge}</p>
+          <p className="card-text">MinVoltageDischarge: {data.minVoltageDischarge}</p>
+          <p className="card-text">ChargeTime: {data.chargeTime}</p>
+          <p className="card-text">RemainingUsefulLife: {data.remainingUsefulLife}</p>
         </div>
       </div>
     </div>
