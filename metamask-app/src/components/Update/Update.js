@@ -68,7 +68,20 @@ const Update = () => {
         remainingUsefulLife,
       } = formData;
 
-      let uri = "ipfs://QmSuXKPUYnF4dhb2YQvE5RpkoijG6zfsbSGTfV9EQKxkoq";
+      var result = cycleIndex + dischargeTime + timeAt415V + timeConstantCurrent + decrementTime + maxVoltageDischarge + minVoltageDischarge + chargeTime + remainingUsefulLife;
+
+      let uri;
+      if (result > 1000) {
+        uri = "ipfs://Qmdxtu7qjzw9BUDaMVHgT3ahYSCxzeWo6EnopC7sMxZ57H";
+      } else if (result > 800 && result < 1000) {
+        uri = "ipfs://QmdwP61i3PTvwgJUAtBU8UtCx6e6JEHAY6mmbNueUdDC7S";
+      } else if (result > 600 && result < 800) {
+        uri = "ipfs://QmSuXKPUYnF4dhb2YQvE5RpkoijG6zfsbSGTfV9EQKxkoq";
+      } else if (result > 400 && result < 600) {
+        uri = "ipfs://QmZBvKyfkmWWNvz79NoDjG9nHXpxjXdyjHmYYuvEp2HCrn";
+      } else if (result > 200 && result < 400) {
+        uri = "ipfs://QmR1GmjiqwpDReNV8MzX1PMRvrVLiYEecFEZBE7pqaAhuG";
+      }
 
       await contract.methods.update(id, uri).send({ from: accounts[0] });
 
