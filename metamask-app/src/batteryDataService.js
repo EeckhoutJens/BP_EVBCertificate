@@ -35,6 +35,18 @@ let BatteryDataList = [
         ChargeTime: 2,
         RemainingUsefulLife: 0,
     },
+    {
+        Id: "4",
+        CycleIndex: 2,
+        DischargeTime: 1,
+        TimeAt4_15V: 3,
+        TimeConstantCurrent: 5,
+        DecrementTime: 20,
+        MaxVoltageDischarge: 1,
+        MinVoltageDischarge: 20,
+        ChargeTime: 2,
+        RemainingUsefulLife: 0,
+    },
 ]
 
 export const getBatteryDataList = () => {
