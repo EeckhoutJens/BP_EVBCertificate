@@ -6,6 +6,7 @@ import { handleFileSubmission, handleJSONSubmission, getMetadataHash } from "../
 import { AddDataToMap, GetTokenId, HasToken } from "../../TokenStorage";
 import contractABI from '../../assets/abi.json';
 import Web3 from 'web3';
+import { v4 as uuidv4 } from 'uuid';
 // Allowed extensions for input file
 const allowedExtensions = ["csv"];
 
@@ -88,18 +89,19 @@ const Load = () => {
             parsedData.forEach(element => {
                 //Make array out of element data so we can properly use it
                 const values = Object.values(element);
-                addOrUpdateData(values[0], values[1], values[2], values[6], values[7], values[3], values[4], values[5], values[8], values[9])
+                const guid = uuidv4();
+                addOrUpdateData(guid, values[0], values[1], values[2], values[6], values[7], values[3], values[4], values[5], values[8])
             });
             console.log(getBatteryDataList())
             setData(columns);
-            await handleJSONSubmission(parsedData[parsedData.length - 1].RUL, parsedData[0].Battery_ID)
-            if (HasToken(parsedData[0].Battery_ID)) {
-                await contract.methods.update(GetTokenId(parsedData[0].Battery_ID), getMetadataHash()).send({ from: accounts[0] });
-            } else {
-                let receivedToken = await contract.methods.create(getMetadataHash()).send({ from: accounts[0] });
-                AddDataToMap(parsedData[0].Battery_ID, receivedToken);
-            }
-            await handleFileSubmission(file)
+            // await handleJSONSubmission(parsedData[parsedData.length - 1].RUL, parsedData[0].Battery_ID)
+            // if (HasToken(parsedData[0].Battery_ID)) {
+            //     await contract.methods.update(GetTokenId(parsedData[0].Battery_ID), getMetadataHash()).send({ from: accounts[0] });
+            // } else {
+            //     let receivedToken = await contract.methods.create(getMetadataHash()).send({ from: accounts[0] });
+            //     AddDataToMap(parsedData[0].Battery_ID, receivedToken);
+            // }
+            // await handleFileSubmission(file)
         };
         reader.readAsText(file);
     };
