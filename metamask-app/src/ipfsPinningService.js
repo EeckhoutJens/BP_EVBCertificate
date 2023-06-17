@@ -31,7 +31,7 @@ export const handleJSONSubmission = async(RUL, BatteryID) => {
     }
     
     const metadata = {
-        name: "BatteryCertificate #" + BatteryID.toString(),
+        name: "BatteryCertificate #" + BatteryID,
         description: "Unique EVB certificate",
         image: imageHash,
         properties: {
