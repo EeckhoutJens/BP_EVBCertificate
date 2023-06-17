@@ -4,8 +4,17 @@ import { Link } from 'react-router-dom';
 import { getBatteryDataList } from '../../batteryDataService';
 
 const Batteries = () => {
-  const savedData = JSON.parse(localStorage.getItem('savedData'));
-  const dataList = getBatteryDataList(savedData);
+  let data = localStorage.getItem('savedData');
+  let noData = false;
+
+  let dataList = [];
+
+  if(data === null){
+    noData = true;
+  }else{
+    let savedData = JSON.parse(data);
+    dataList = getBatteryDataList(savedData);
+  }
  
   // Retrieve the data list
   return (
@@ -22,6 +31,11 @@ const Batteries = () => {
             </div>
           </div>
         ))}
+      </div>
+      <div>
+      {noData && (
+        <p>No data, load data from the Load Battery Data page.</p>
+      )}
       </div>
     </div>
   );
