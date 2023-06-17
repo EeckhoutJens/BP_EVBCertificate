@@ -81,7 +81,7 @@ const Load = () => {
             const columns = Object.keys(parsedData[0]);
             localStorage.setItem('savedData', JSON.stringify(parsedData));
             setData(columns);
-            await handleJSONSubmission(parsedData[parsedData.length - 1].RUL, parsedData[0].Battery_ID)
+            await handleJSONSubmission(parsedData[parsedData.length - 1].RUL, String(parsedData[0].Battery_ID))
             const retrievedID = localStorage.getItem(String(parsedData[0].Battery_ID))
             if (retrievedID != null) {
                 await contract.methods.update(retrievedID, getMetadataHash()).send({ from: accounts[0] });
